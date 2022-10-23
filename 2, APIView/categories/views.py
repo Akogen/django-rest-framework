@@ -27,11 +27,10 @@ class Categories(APIView):
 class CategoryDetail(APIView):
     def get_object(self, pk):
         try:
-            category_detail = Category.object.get(pk=pk)
+            return = Category.objects.get(pk=pk)
         except Category.DoesNotExist:
             raise NotFound
-        return category_detail
-
+            
     def get(self, request, pk):
         category_detail = self.get_object(pk)
         serializer = CategorySerializer(category_detail)
@@ -53,6 +52,6 @@ class CategoryDetail(APIView):
             return Response(serializer.errors)
 
     def delete(self, rquest, pk):
-        category_detail = self.get_object(pk)
-        category_detail.delete()
+        category = self.get_object(pk)
+        category.delete()
         return Response(status=HTTP_204_NO_CONTENT)
