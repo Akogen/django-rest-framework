@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view
-from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
 from rest_framework.status import HTTP_204_NO_CONTENT
 from .models import Category
 from .serializers import CategorySerializer
@@ -10,15 +10,19 @@ from .serializers import CategorySerializer
 def categories(request):
     if request.method == "GET":
         all_categories = Category.objects.all()
-        serializer = CategorySerializer(all_categories, many=True)
+        serializer = CategorySerializer(
+            all_categories,
+            many=True,
+        )
         return Response(serializer.data)
     elif request.method == "POST":
-        serializer = CategorySerializer(data=request.data)
+        serializer = CategorySerializer(
+            data=request.data,
+        )
         if serializer.is_valid():
             created_category = serializer.save()
-            return Response(
-                CategorySerializer(created_category).data,
-            )
+            serializer = CategorySerializer(created_category)
+            return Response(serializer.data)
         else:
             return Response(serializer.errors)
 
@@ -41,9 +45,8 @@ def category(request, pk):
         )
         if serializer.is_valid():
             updated_category = serializer.save()
-            return Response(
-                CategorySerializer(updated_category).data,
-            )
+            serializer = CategorySerializer(updated_category)
+            return Response(serializer.data)
         else:
             return Response(serializer.errors)
     elif request.method == "DELETE":
