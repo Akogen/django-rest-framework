@@ -10,18 +10,13 @@ from .serializers import CategorySerializer
 def categories(request):
     if request.method == "GET":
         all_categories = Category.objects.all()
-        serializer = CategorySerializer(
-            all_categories,
-            many=True,
-        )
+        serializer = CategorySerializer(all_categories, many=True)
         return Response(serializer.data)
     elif request.method == "POST":
-        serializer = CategorySerializer(
-            data=request.data,
-        )
+        serializer = CategorySerializer(data=request.data)
         if serializer.is_valid():
-            created_category = serializer.save()
-            serializer = CategorySerializer(created_category)
+            category = serializer.save()
+            serializer = CategorySerializer(category)
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
@@ -30,25 +25,27 @@ def categories(request):
 @api_view(["GET", "PUT", "DELETE"])
 def category(request, pk):
     try:
-        category_detail = Category.object.get(pk=pk)
+        category = Category.object.get(pk=pk)
     except Category.DoesNotExist:
         raise NotFound
 
     if request.method == "GET":
-        serializer = CategorySerializer(category_detail)
+        serializer = CategorySerializer(category)
         return Response(serializer.data)
+
     elif request.method == "PUT":
         serializer = CategorySerializer(
-            category_detail,
+            category,
             data=request.data,
             partial=True,
         )
         if serializer.is_valid():
-            updated_category = serializer.save()
-            serializer = CategorySerializer(updated_category)
+            category = serializer.save()
+            serializer = CategorySerializer(category)
             return Response(serializer.data)
+
         else:
             return Response(serializer.errors)
     elif request.method == "DELETE":
-        category_detail.delete()
+        category.delete()
         return Response(status=HTTP_204_NO_CONTENT)

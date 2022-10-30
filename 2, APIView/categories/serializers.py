@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Category
 
 
-class CategorySerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.Serializer):
     pk = serializers.IntegerField(read_only=True)
     name = serializers.CharField(
         required=True,

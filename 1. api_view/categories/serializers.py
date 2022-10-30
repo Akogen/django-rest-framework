@@ -2,14 +2,14 @@ from rest_framework import serializers
 from .models import Category
 
 
-class CategorySerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.Serializer):
     pk = serializers.IntegerField(read_only=True)
     name = serializers.CharField(
         required=True,
         max_length=50,
     )
     category_type = serializers.ChoiceField(
-        choices=Category.CategoryKindChoices.choices,
+        choices=Category.CategoryTypeChoices.choices,
     )
     created_at = serializers.DateTimeField(read_only=True)
 
