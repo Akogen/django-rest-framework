@@ -9,21 +9,16 @@ from .serializers import CategorySerializer
 class Categories(APIView):
     def get(self, request):
         all_categories = Category.objects.all()
-        serializer = CategorySerializer(
-            all_categories,
-            many=True,
-        )
+        serializer = CategorySerializer(all_categories, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = CategorySerializer(
-            data=request.data,
-        )
+        serializer = CategorySerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors)
 
-        created_category = serializer.save()
-        serializer = CategorySerializer(created_category)
+        category = serializer.save()
+        serializer = CategorySerializer(category)
         return Response(serializer.data)
 
 
@@ -35,22 +30,22 @@ class CategoryDetail(APIView):
             raise NotFound
 
     def get(self, request, pk):
-        category_detail = self.get_object(pk)
-        serializer = CategorySerializer(category_detail)
+        category = self.get_object(pk)
+        serializer = CategorySerializer(category)
         return Response(serializer.data)
 
     def put(self, request, pk):
-        category_detail = self.get_object(pk)
+        category = self.get_object(pk)
         serializer = CategorySerializer(
-            category_detail,
+            category,
             data=request.data,
             partial=True,
         )
         if not serializer.is_valid():
             return Response(serializer.errors)
 
-        updated_category = serializer.save()
-        serializer = CategorySerializer(updated_category)
+        category = serializer.save()
+        serializer = CategorySerializer(category)
         return Response(serializer.data)
 
     def delete(self, rquest, pk):
