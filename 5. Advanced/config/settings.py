@@ -32,15 +32,8 @@ ALLOWED_HOSTS = []
 
 CUSTOM_APPS = [
     "common.apps.CommonConfig",
-    "users.apps.UsersConfig",
     "rooms.apps.RoomsConfig",
-    "experiences.apps.ExperiencesConfig",
     "categories.apps.CategoriesConfig",
-    "reviews.apps.ReviewsConfig",
-    "wishlists.apps.WishlistsConfig",
-    "bookings.apps.BookingsConfig",
-    "medias.apps.MediasConfig",
-    "direct_messages.apps.DirectMessagesConfig",
 ]
 
 THIRD_PARTY_APPS = ["rest_framework"]
