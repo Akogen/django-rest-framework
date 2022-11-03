@@ -4,10 +4,7 @@ from .models import Category
 
 class CategorySerializer(serializers.Serializer):
     pk = serializers.IntegerField(read_only=True)
-    name = serializers.CharField(
-        required=True,
-        max_length=50,
-    )
+    name = serializers.CharField(required=True, max_length=50)
     category_type = serializers.ChoiceField(
         choices=Category.CategoryTypeChoices.choices,
     )

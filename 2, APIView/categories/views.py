@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework import exceptions
 from rest_framework.response import Response
-from rest_framework.exceptions import NotFound
-from rest_framework.status import HTTP_204_NO_CONTENT
 from .models import Category
 from .serializers import CategorySerializer
 
@@ -27,7 +27,7 @@ class CategoryDetail(APIView):
         try:
             return = Category.objects.get(pk=pk)
         except Category.DoesNotExist:
-            raise NotFound
+            raise exceptions.NotFound
             
     def get(self, request, pk):
         category = self.get_object(pk)
@@ -51,4 +51,4 @@ class CategoryDetail(APIView):
     def delete(self, rquest, pk):
         category = self.get_object(pk)
         category.delete()
-        return Response(status=HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_200_OK)

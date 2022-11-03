@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
+from rest_framework import status
+from rest_framework import exceptions
 from rest_framework.response import Response
-from rest_framework.exceptions import NotFound
-from rest_framework.status import HTTP_204_NO_CONTENT
 from .models import Category
 from .serializers import CategorySerializer
 
@@ -27,7 +27,7 @@ def category(request, pk):
     try:
         category = Category.object.get(pk=pk)
     except Category.DoesNotExist:
-        raise NotFound
+        raise exceptions.NotFound
 
     if request.method == "GET":
         serializer = CategorySerializer(category)
@@ -48,4 +48,4 @@ def category(request, pk):
             return Response(serializer.errors)
     elif request.method == "DELETE":
         category.delete()
-        return Response(status=HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_200_OK)

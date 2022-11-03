@@ -7,14 +7,13 @@ class Category(AbstractTimeStamp):
 
     class CatogoryTypeChoices(models.TextChoices):
         ROOM = ("rooms", "Rooms")
-        EXPERIENCES = ("experiences", "Experiences")
+        EXPERIENCE = ("experiences", "Experiences")
 
+    name = models.CharField(max_length=250)
     category_type = models.CharField(
         max_length=15,
         choices=CatogoryTypeChoices.choices,
     )
-
-    name = models.CharField(max_length=250)
 
     def __str__(self) -> str:
         return f"{self.category_type} - {self.name}"
