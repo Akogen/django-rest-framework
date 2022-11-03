@@ -26,7 +26,7 @@ class CategoryDetail(APIView):
     def get_object(self, pk):
         try:
             return Category.objects.get(pk=pk)
-        except Category.DoesNotExist:
+        except category.DoesNotExist:
             raise exceptions.NotFound
 
     def get(self, request, pk):
@@ -48,7 +48,7 @@ class CategoryDetail(APIView):
         serializer = CategorySerializer(category)
         return Response(serializer.data)
 
-    def delete(self, rquest, pk):
+    def delete(self, request, pk):
         category = self.get_object(pk)
         category.delete()
         return Response(status=status.HTTP_200_OK)
