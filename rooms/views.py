@@ -7,9 +7,13 @@ from rest_framework import status
 from rest_framework import exceptions
 from rest_framework.response import Response
 from .models import Room, Amenity, Facility, HouseRule
-from .serializers import RoomListSerializer, RoomDetailSerializer
-
-
+from .serializers import (
+    RoomListSerializer,
+    RoomDetailSerializer,
+    AmenitySerializer,
+    FacilitySerializer,
+    HouseRuleSerializer,
+)
 from categories.models import Category
 from reviews.serializers import ReviewSerializer
 from medias.serializers import PhotoSerializer
@@ -462,6 +466,10 @@ class RoomBookings(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors)
 
-        booking = serializer.save(room=room)
-        serialzer = PhotoSerializer(booking)
+        booking = serializer.save(
+            room=room,
+            user=request.user,
+            kind=Booking.BookingKindChoices.ROOM,
+        )
+        serialzer = CreateRoomBookingSerializer(booking)
         return Response(serialzer.data)

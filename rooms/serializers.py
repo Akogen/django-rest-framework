@@ -6,6 +6,40 @@ from medias.serializers import PhotoSerializer
 from wishlists.models import Wishlist
 
 
+class AmenitySerializer(ModelSerializer):
+    class Meta:
+        model = Amenity
+        fields = (
+            "name",
+            "description",
+        )
+
+
+class FacilitySerializer(ModelSerializer):
+    class Meta:
+        model = Facility
+        fields = (
+            "name",
+            "description",
+        )
+
+
+class HouseRuleSerializer(ModelSerializer):
+    class Meta:
+        model = HouseRule
+        fields = (
+            "name",
+            "description",
+        )
+
+
+class RoomSerializer(ModelSerializer):
+    class Meta:
+        model = Room
+        fields = "__all__"
+        depth = 1
+
+
 class RoomListSerializer(ModelSerializer):
     review_rating = SerializerMethodField()
     is_host = SerializerMethodField()
